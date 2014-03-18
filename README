@@ -1,0 +1,74 @@
+
+
+       _     _     _     _
+      | |__ | |__ | |__ | | __ _ ___ _ __
+      | '_ \| '_ \| '_ \| |/ _` / __| '__|
+      | |_) | |_) | |_) | | (_| \__ \ |
+      |_.__/|_.__/|_.__/|_|\__,_|___/_|
+
+  beagle bone black logic analyzer for sigrok
+
+
+
+bbblasr
+~~~~~~~
+
+Currently nothing more than some C code running bare metal on a beagle bone
+black.
+
+This may or may not become a logic analyzer based on the two PRU engines in
+the TI SoC AM355x which is the core of the beaglebone black.
+The two PRUs run at 200MHz and are able to read a GPIO pin per cycle.
+
+A second personal goal of this is to program a modern SoC from ground up
+not using any existing software framework or stack. On the way I prefer
+to pick all the interesting fruits, not exactly always the low hanging
+fruits...
+
+For now:
+This code is interrupt driven.
+There's a serial console on UART0, so probably you want to connect some
+USB 3v3 UART cable to the bbb J1 UART connector.
+There's a GPIO interrupt handler for pushbutton S2.
+The PRUs blink some LEDs by accessing the mmaped registers of the ARM.
+Each PRU can raise ARM host interrupts and has its own interrupt handler.
+
+
+prerequisites
+~~~~~~~~~~~~~
+
+- ARM cross toolchain (or you compile e.g. on linux on the bbb itself,
+  which I never did). Mine is called arm-linux-gnueabihf-
+  see the Makefile for details
+- pasm, the PRU assembler.
+- mkimage, the u-boot image packer
+
+
+building
+~~~~~~~~
+
+make clean && make
+
+
+booting
+~~~~~~~
+
+usually/likely you may want to boot from u-boot, e.g.:
+
+setenv serverip 192.168.1.4
+setenv ipaddr   192.168.1.244
+tftpboot 80000000 bbblasr.bin
+go 0x80000000
+
+but there are many ways to boot, like SD-card, USB, eMMC, ...
+
+
+modes
+~~~~~
+
+different LA operational modes I can think of
+
+- stream: sample 2x16 pins, transfer to ARM, IRQ, ethernet
+- one shot: (trigger) sample 8kB @ highest rate, inform ARM
+- deserializer
+
