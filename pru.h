@@ -139,6 +139,8 @@
 #define PRU1_CTPPR1               ( * (vu32 *)(PRU_PRU1_REGS + 0x2c))
 
 #define CONTROL_MODULE               0x44E10000
+#define BANDGAP_CTRL               ( * (vu32 *)(CONTROL_MODULE+0x448))
+#define BANDGAP_TRIM               ( * (vu32 *)(CONTROL_MODULE+0x44c))
 #define DEV_FEATURE                ( * (vu32 *)(CONTROL_MODULE+0x604))
 #define INIT_PRIORITY_0            ( * (vu32 *)(CONTROL_MODULE+0x608))
 #define MREQPRIO_0                 ( * (vu32 *)(CONTROL_MODULE+0x670))

@@ -140,6 +140,28 @@ void puthex32(u32 c)
   puthex16( c & 0xffff );
 }
 
+void putdec8(u8 b)
+{
+  if (b > 100)
+  {
+    if (b>200)
+    {
+      bbb_putc('2');
+      b -= 200;
+    } else {
+      bbb_putc('1');
+      b -= 100;
+    }
+  }
+  if (b > 10)
+  {
+    u8 d = b/10;
+    bbb_putc('0' + d);
+    b -= d*10;
+  }
+  bbb_putc('0' + b);
+}
+
 void led_set(unsigned char led)
 {
   switch (led)

@@ -32,6 +32,8 @@ void puthex8(u8 c);
 void puthex16(u16 c);
 void puthex32(u32 c);
 
+void putdec8(u8 b);
+
 void led_set(unsigned char led);
 void led_clr(unsigned char led);
 void led_toggle(unsigned char led);

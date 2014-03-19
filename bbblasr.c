@@ -35,6 +35,7 @@ char * help =
   p - memtest on PRU code and data RAM\n\r\
   x - enter ARM undef mode\n\r\
   d - enter ARM data abort mode\n\r\
+  t - show temperature\n\r\
   . - reset the ARM (actually only jumps to reset vector in ROM, registers are not reset!)\n\r\
   \n\r\
   h - print this help\n\r\
@@ -130,13 +131,34 @@ void init(void)
   init_buttons();
 }
 
+void bandgap(void)
+{
+  BANDGAP_CTRL = 0x00; /* reset digital output */
+  BANDGAP_CTRL = 0x08; /* reset digital output */
+
+  BANDGAP_CTRL = 0x18; /* start conversion */
+
+  delay_ms(1);
+
+  u32 val;
+
+  while ( (val = BANDGAP_CTRL) & 0x02 );
+
+  BANDGAP_CTRL = 0x08; /* reset digital output */
+
+  val >>= 8;
+  bbb_puts("temperature: ");
+  putdec8(val);
+  bbb_puts(" degree Celsius\r\n");
+}
+
 int main(void)
 {
   while (1)
   {
     init();
     bbb_puts(banner);
-    bbb_puts("please choose  [1234nmqipxd.h]  h for help\r\n");
+    bbb_puts("please choose  [1234nmqipxdt.h]  h for help\r\n");
 
     char ch;
     int cmd_q = 0;
@@ -182,6 +204,9 @@ int main(void)
           break;
         case 'm':
           start_pru(1);
+          break;
+        case 't':
+          bandgap();
           break;
         case 'x':
           asm volatile (".align 5\n\t");
