@@ -55,6 +55,17 @@ void init_exception_handlers(void)
 void init_gpio(void)
 {
   *(vu32 *)(GPIO1_BASE+GPIO_OE) &= ~(LED0_BIT | LED1_BIT | LED2_BIT | LED3_BIT);
+
+  /* PRU GPIOs */
+  *(vu32 *)(GPIO1_BASE+GPIO_OE) &= ~(0x80000000); /* PRU1 connector P8 pin 20 */
+
+  /* pin mux gpmc_csn2 -> gpio1_31 (mode7) */
+  bbb_puts("GPMC_CSN2 : ");
+  puthex8(CONF_GPMC_CSN2);
+  CONF_GPMC_CSN2 = 0x07;
+  bbb_puts("changed to:\r\n");
+  bbb_puts("GPMC_CSN2 : ");
+  puthex8(CONF_GPMC_CSN2);
 }
 
 void init_leds(void)

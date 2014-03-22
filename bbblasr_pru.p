@@ -12,6 +12,8 @@
 #define GPIO_CLEARDATAOUT      0x190
 #define GPIO_SETDATAOUT        0x194
 
+#define DELAY_CONST 0x00400000
+//#define DELAY_CONST 0x00040000
 
 START:
 // clear that bit
@@ -22,20 +24,53 @@ START:
     MOV r1, 5
 
 BLINK:
-    MOV r2, 1<<(21+PRU_NR)
+    MOV r2, 1<<(21+ (10 * PRU_NR) ) // PRU1 -> GPIO1_31
     MOV r3, GPIO1 | GPIO_SETDATAOUT
-    SBBO r2, r3, 0, 4
+    MOV r4, GPIO1 | GPIO_CLEARDATAOUT
 
-    MOV r0, 0x00400000
+    SBBO r2, r3, 0, 4
+    SBBO r2, r4, 0, 4
+    SBBO r2, r3, 0, 4
+    SBBO r2, r4, 0, 4
+    SBBO r2, r3, 0, 4
+    SBBO r2, r4, 0, 4
+    SBBO r2, r3, 0, 4
+    SBBO r2, r4, 0, 4
+    SBBO r2, r3, 0, 4
+    SBBO r2, r4, 0, 4
+    SBBO r2, r3, 0, 4
+    SBBO r2, r4, 0, 4
+    SBBO r2, r3, 0, 4
+    SBBO r2, r4, 0, 4
+    SBBO r2, r3, 0, 4
+    SBBO r2, r4, 0, 4
+    SBBO r2, r3, 0, 4
+    SBBO r2, r4, 0, 4
+    SBBO r2, r3, 0, 4
+    SBBO r2, r4, 0, 4
+    SBBO r2, r3, 0, 4
+    SBBO r2, r4, 0, 4
+    SBBO r2, r3, 0, 4
+    SBBO r2, r4, 0, 4
+    SBBO r2, r3, 0, 4
+    SBBO r2, r4, 0, 4
+    SBBO r2, r3, 0, 4
+    SBBO r2, r4, 0, 4
+    SBBO r2, r3, 0, 4
+    SBBO r2, r4, 0, 4
+    SBBO r2, r3, 0, 4
+    SBBO r2, r4, 0, 4
+
+    MOV r0, DELAY_CONST
 DELAY:
     SUB r0, r0, 1
     QBNE DELAY, r0, 0
 
-    MOV r2, 1<<(21+PRU_NR)
+    MOV r2, 1<<(21+ (10 * PRU_NR) ) // PRU1 -> GPIO1_31
     MOV r3, GPIO1 | GPIO_CLEARDATAOUT
     SBBO r2, r3, 0, 4
 
-    MOV r0, 0x00400000
+    MOV r0, DELAY_CONST
 DELAY2:
     SUB r0, r0, 1
     QBNE DELAY2, r0, 0
