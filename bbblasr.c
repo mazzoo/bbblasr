@@ -62,7 +62,7 @@ void init_gpio(void)
   /* pin mux gpmc_csn2 -> gpio1_31 (mode7) */
   bbb_puts("GPMC_CSN2 : ");
   puthex8(CONF_GPMC_CSN2);
-  CONF_GPMC_CSN2 = 0x07;
+  CONF_GPMC_CSN2 = 0x05;
   bbb_puts("changed to:\r\n");
   bbb_puts("GPMC_CSN2 : ");
   puthex8(CONF_GPMC_CSN2);

@@ -26,40 +26,14 @@ START:
 BLINK:
     MOV r2, 1<<(21+ (10 * PRU_NR) ) // PRU1 -> GPIO1_31
     MOV r3, GPIO1 | GPIO_SETDATAOUT
-    MOV r4, GPIO1 | GPIO_CLEARDATAOUT
 
-    SBBO r2, r3, 0, 4
-    SBBO r2, r4, 0, 4
-    SBBO r2, r3, 0, 4
-    SBBO r2, r4, 0, 4
-    SBBO r2, r3, 0, 4
-    SBBO r2, r4, 0, 4
-    SBBO r2, r3, 0, 4
-    SBBO r2, r4, 0, 4
-    SBBO r2, r3, 0, 4
-    SBBO r2, r4, 0, 4
-    SBBO r2, r3, 0, 4
-    SBBO r2, r4, 0, 4
-    SBBO r2, r3, 0, 4
-    SBBO r2, r4, 0, 4
-    SBBO r2, r3, 0, 4
-    SBBO r2, r4, 0, 4
-    SBBO r2, r3, 0, 4
-    SBBO r2, r4, 0, 4
-    SBBO r2, r3, 0, 4
-    SBBO r2, r4, 0, 4
-    SBBO r2, r3, 0, 4
-    SBBO r2, r4, 0, 4
-    SBBO r2, r3, 0, 4
-    SBBO r2, r4, 0, 4
-    SBBO r2, r3, 0, 4
-    SBBO r2, r4, 0, 4
-    SBBO r2, r3, 0, 4
-    SBBO r2, r4, 0, 4
-    SBBO r2, r3, 0, 4
-    SBBO r2, r4, 0, 4
-    SBBO r2, r3, 0, 4
-    SBBO r2, r4, 0, 4
+
+    SET r30.t13 // set GPIO1_31 high
+    CLR r30.t13 // set GPIO1_31 low
+
+    SET r30.t13 // set GPIO1_31 high
+    CLR r30.t13 // set GPIO1_31 low
+
 
     MOV r0, DELAY_CONST
 DELAY:

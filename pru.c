@@ -59,8 +59,6 @@ void init_pru(void)
 
   load_pru(0);
   load_pru(1);
-  start_pru(0);
-  start_pru(1);
 }
 
 
